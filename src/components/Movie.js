@@ -1,11 +1,16 @@
 import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+//1
+import {connect} from 'react-redux';
 
 const Movie = (props) => {
     const { id } = useParams();
     const { push } = useHistory();
 
-    const movies = [];
+    //4
+    // const movies = []; - delete and write the destructured code below. Now Movie component has access to the movies list
+    const { movies } = props;
+    //movies is used below. will be explained next class. displays movie by id
     const movie = movies.find(movie=>movie.id===Number(id));
     
     return(<div className="modal-page col">
@@ -47,4 +52,14 @@ const Movie = (props) => {
     </div>);
 }
 
-export default Movie;
+//3
+//5 test 1-4 by checking UI
+function mapStateToProps(state){
+    return{
+        movies: state.movies
+    }
+}
+
+
+//2
+export default connect(mapStateToProps)(Movie);

@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+//1 give this comp access to the data from the movieReducer
+import {connect} from 'react-redux';
 
 const MovieHeader = (props) => {
-    const appTitle = "";
+    // 4
+    // const appTitle = "";
+    const { appTitle } = props;
+
     const displayFavorites = true;
     
     return(<div className="table-title">
@@ -19,4 +24,14 @@ const MovieHeader = (props) => {
     </div>);
 }
 
-export default MovieHeader;
+//3
+//5 test 1-4 by checking UI
+function mapStateToProps(state){
+    return{
+        appTitle: state.appTitle
+    }
+ }
+
+
+//2 give data to props in this component
+export default connect(mapStateToProps)(MovieHeader);
