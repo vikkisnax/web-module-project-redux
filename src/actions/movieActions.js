@@ -1,5 +1,11 @@
+//action type 
 export const DELETE_MOVIE = "DELETE_MOVIE";
 
-export const deleteMovie = (id)=>{
-    return({type: DELETE_MOVIE, payload:id});
+//action creator - funct that creates & returns an action obj
+export const deleteMovie = (id) => {
+    return({
+        //action (obj)
+        type: DELETE_MOVIE, 
+        payload:id
+    });
 }
