@@ -4,6 +4,8 @@ import { useParams, useHistory } from 'react-router-dom';
 import {connect} from 'react-redux';
 //a1
 import {deleteMovie} from '../actions/movieActions';
+//c
+import { addFavorite } from '../actions/favoritesActions';
 
 const Movie = (props) => {
     const { id } = useParams();
@@ -12,7 +14,9 @@ const Movie = (props) => {
     //4
     // const movies = []; - delete and write the destructured code below. Now Movie component has access to the movies list. Movie shows 1 movie.
     //a4 delteMovie is inside of props so deconstruct it so you don't have to write props.deleteMovie
-    const { movies, deleteMovie } = props;
+    // b1 displayfav -- so we can access these
+    // c
+    const { movies, deleteMovie, displayFavorites, addFavorite } = props;
     
     //movies is used below. will be explained next class. displays movie by id
     const movie = movies.find(movie=>movie.id===Number(id));
@@ -22,6 +26,13 @@ const Movie = (props) => {
     deleteMovie(movie.id);
     //a6 redirect. 'push' from useHistory
     push('/movies');
+   }
+
+
+   //c
+   const handleFavoriteClick = () => {
+        //movie has all data. making a copy of the data
+        addFavorite(movie);
    }
 
     return(<div className="modal-page col">
@@ -53,7 +64,13 @@ const Movie = (props) => {
                         </section>
                         
                         <section>
-                            <span className="m-2 btn btn-dark">Favorite</span>
+                            {/* b2 */}
+                            {displayFavorites && 
+                                <span 
+                                    className="m-2 btn btn-dark"
+                                    // c
+                                    onClick={handleFavoriteClick}
+                                >Favorite</span> }
                             <span 
                                 className="delete"
                                 //a4
@@ -75,12 +92,14 @@ const Movie = (props) => {
 
 //3
 //5 test 1-4 by checking UI
+//b building out fav reducer in index.js: just combined reducers. now fix where we referenced it. connect reducer to comp
 function mapStateToProps(state){
-    return{
-        movies: state.movies
-    }
+    return({
+        movies: state.movieReducer.movies,
+        displayFavorites: state.favoritesReducer.displayFavorites
+    })
 }
 
 
-//2 //a2 connect action {deleteMovie}
-export default connect(mapStateToProps, {deleteMovie})(Movie);
+//2 //a2 connect action {deleteMovie} //c handleFavClick
+export default connect(mapStateToProps, {deleteMovie, addFavorite})(Movie);

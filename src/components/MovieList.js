@@ -41,9 +41,11 @@ const MovieList = (props)=> {
 
 //3. now movies is inside of our props above. movies we get are the ones that are passed in to our state
 //5 test 1-4 by checking UI
+//b building out fav reducer in index.js: just combined reducers. now fix where we referenced it. connect reducer to comp
 function mapStateToProps(state){
+    // console.log(state);
     return{
-        movies: state.movies
+        movies: state.movieReducer.movies
     }
  }
 
